@@ -38,9 +38,7 @@ namespace MaintainSebaranMushaf
             //dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridViewMaster.AutoResizeColumns();
             dataGridViewMaster.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewMaster.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewMaster.Columns[0].MinimumWidth = 50;
-            dataGridViewMaster.Columns[0].Width = 70;
+            dataGridViewMaster.Columns[0].Visible = false;
             dataGridViewMaster.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridViewMaster.Columns[2].MinimumWidth = 150;
             dataGridViewMaster.Columns[2].Width = 150;
@@ -64,6 +62,7 @@ namespace MaintainSebaranMushaf
         {
             panelAktif.Height = btnMaintain.Height;
             panelAktif.Top = btnMaintain.Top;
+            panelMaintain.Show();
         }
 
 
@@ -72,12 +71,14 @@ namespace MaintainSebaranMushaf
         {
             panelAktif.Height = btnLoad.Height;
             panelAktif.Top = btnLoad.Top;
+            panelMaintain.Hide();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
         {
             panelAktif.Height = btnExport.Height;
             panelAktif.Top = btnExport.Top;
+            panelMaintain.Hide();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -124,7 +125,10 @@ namespace MaintainSebaranMushaf
                 //dataGridView1.CellClick += dataGridView1_CellClick;
                 dataGridViewDetail.AutoResizeColumns();
                 dataGridViewDetail.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dataGridViewDetail.Columns[0].Visible = false;
+                dataGridViewDetail.Columns[1].Visible = false;
                 dataGridViewDetail.Columns[3].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dataGridViewDetail.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
                 //dataGridViewDetail.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             }
         }
