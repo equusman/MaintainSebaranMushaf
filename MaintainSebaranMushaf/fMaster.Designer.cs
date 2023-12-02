@@ -40,21 +40,21 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelMaintain = new System.Windows.Forms.Panel();
+            this.panelDetail = new System.Windows.Forms.Panel();
+            this.labelIDPilihan = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dataGridViewDetail = new System.Windows.Forms.DataGridView();
+            this.panelMaster = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panelMaster = new System.Windows.Forms.Panel();
-            this.panelDetail = new System.Windows.Forms.Panel();
-            this.dataGridViewDetail = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.labelIDPilihan = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMaster)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelMaintain.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panelMaster.SuspendLayout();
             this.panelDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetail)).BeginInit();
+            this.panelMaster.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -193,6 +193,73 @@
             this.panelMaintain.Size = new System.Drawing.Size(984, 730);
             this.panelMaintain.TabIndex = 4;
             // 
+            // panelDetail
+            // 
+            this.panelDetail.Controls.Add(this.labelIDPilihan);
+            this.panelDetail.Controls.Add(this.label3);
+            this.panelDetail.Controls.Add(this.button1);
+            this.panelDetail.Controls.Add(this.dataGridViewDetail);
+            this.panelDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetail.Location = new System.Drawing.Point(0, 338);
+            this.panelDetail.Name = "panelDetail";
+            this.panelDetail.Size = new System.Drawing.Size(984, 392);
+            this.panelDetail.TabIndex = 5;
+            // 
+            // labelIDPilihan
+            // 
+            this.labelIDPilihan.AutoSize = true;
+            this.labelIDPilihan.Font = new System.Drawing.Font("Century Gothic", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIDPilihan.ForeColor = System.Drawing.Color.White;
+            this.labelIDPilihan.Location = new System.Drawing.Point(224, 20);
+            this.labelIDPilihan.Name = "labelIDPilihan";
+            this.labelIDPilihan.Size = new System.Drawing.Size(0, 23);
+            this.labelIDPilihan.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(6, 20);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(217, 22);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Detail Sebaran Mushaf";
+            // 
+            // dataGridViewDetail
+            // 
+            this.dataGridViewDetail.AllowUserToAddRows = false;
+            this.dataGridViewDetail.AllowUserToDeleteRows = false;
+            this.dataGridViewDetail.AllowUserToOrderColumns = true;
+            this.dataGridViewDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewDetail.Location = new System.Drawing.Point(7, 45);
+            this.dataGridViewDetail.Name = "dataGridViewDetail";
+            this.dataGridViewDetail.Size = new System.Drawing.Size(965, 341);
+            this.dataGridViewDetail.TabIndex = 0;
+            this.dataGridViewDetail.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDetail_CellClick);
+            this.dataGridViewDetail.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDetail_CellMouseEnter);
+            // 
+            // panelMaster
+            // 
+            this.panelMaster.Controls.Add(this.dataGridViewMaster);
+            this.panelMaster.Controls.Add(this.label2);
+            this.panelMaster.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelMaster.Location = new System.Drawing.Point(0, 65);
+            this.panelMaster.Name = "panelMaster";
+            this.panelMaster.Size = new System.Drawing.Size(984, 273);
+            this.panelMaster.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(167, 22);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Titik Poin Sebaran";
+            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.label1);
@@ -213,71 +280,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Maintain Sebaran";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(167, 22);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Titik Poin Sebaran";
-            // 
-            // panelMaster
-            // 
-            this.panelMaster.Controls.Add(this.dataGridViewMaster);
-            this.panelMaster.Controls.Add(this.label2);
-            this.panelMaster.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelMaster.Location = new System.Drawing.Point(0, 65);
-            this.panelMaster.Name = "panelMaster";
-            this.panelMaster.Size = new System.Drawing.Size(984, 273);
-            this.panelMaster.TabIndex = 4;
-            // 
-            // panelDetail
-            // 
-            this.panelDetail.Controls.Add(this.labelIDPilihan);
-            this.panelDetail.Controls.Add(this.label3);
-            this.panelDetail.Controls.Add(this.button1);
-            this.panelDetail.Controls.Add(this.dataGridViewDetail);
-            this.panelDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDetail.Location = new System.Drawing.Point(0, 338);
-            this.panelDetail.Name = "panelDetail";
-            this.panelDetail.Size = new System.Drawing.Size(984, 392);
-            this.panelDetail.TabIndex = 5;
-            // 
-            // dataGridViewDetail
-            // 
-            this.dataGridViewDetail.AllowUserToAddRows = false;
-            this.dataGridViewDetail.AllowUserToDeleteRows = false;
-            this.dataGridViewDetail.AllowUserToOrderColumns = true;
-            this.dataGridViewDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewDetail.Location = new System.Drawing.Point(7, 45);
-            this.dataGridViewDetail.Name = "dataGridViewDetail";
-            this.dataGridViewDetail.Size = new System.Drawing.Size(965, 341);
-            this.dataGridViewDetail.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(6, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(217, 22);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Detail Sebaran Mushaf";
-            // 
-            // labelIDPilihan
-            // 
-            this.labelIDPilihan.AutoSize = true;
-            this.labelIDPilihan.Font = new System.Drawing.Font("Century Gothic", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelIDPilihan.ForeColor = System.Drawing.Color.White;
-            this.labelIDPilihan.Location = new System.Drawing.Point(224, 20);
-            this.labelIDPilihan.Name = "labelIDPilihan";
-            this.labelIDPilihan.Size = new System.Drawing.Size(0, 23);
-            this.labelIDPilihan.TabIndex = 3;
-            // 
             // fMaster
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -296,13 +298,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMaster)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panelMaintain.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            this.panelMaster.ResumeLayout(false);
-            this.panelMaster.PerformLayout();
             this.panelDetail.ResumeLayout(false);
             this.panelDetail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetail)).EndInit();
+            this.panelMaster.ResumeLayout(false);
+            this.panelMaster.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }

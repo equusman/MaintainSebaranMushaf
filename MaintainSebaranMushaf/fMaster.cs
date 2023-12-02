@@ -48,14 +48,74 @@ namespace MaintainSebaranMushaf
 
 
 
-            //cara tambahkan kolom image
-            //DataGridViewImageColumn img = new DataGridViewImageColumn();
-            //Image image = Image.FromFile("d:\\temp\\test.png");
-            //img.Image = image;
-            //dataGridView1.Columns.Add(img);
-
         }
 
+        private void dataGridViewMaster_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0)
+            {
+                // MessageBox.Show(dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString());
+                DataTable detaile = db.GetDetail(dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString());
+                dataGridViewDetail.RowTemplate.Height = 100;
+                dataGridViewDetail.DataSource = null;
+                dataGridViewDetail.Rows.Clear();
+                dataGridViewDetail.Columns.Clear();
+                dataGridViewDetail.DataSource = detaile;
+                labelIDPilihan.Text = "- " + dataGridViewMaster.Rows[e.RowIndex].Cells[1].Value.ToString();
+
+                DataGridViewImageColumn img = new DataGridViewImageColumn();
+                Image image = null;
+                //img.Image = image;
+                img.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                dataGridViewDetail.Columns.Add(img);
+
+                DataGridViewImageCell imgcell = new DataGridViewImageCell();
+                foreach (DataGridViewRow baris in dataGridViewDetail.Rows)
+                {
+                    image = Image.FromFile(Application.StartupPath.ToString() + baris.Cells[4].Value.ToString().Replace('/','\\') + ".png");
+                    baris.Cells[5].Value = (System.Drawing.Image)image;
+                }
+
+
+                DataGridViewButtonColumn btneditdetail = new DataGridViewButtonColumn();
+                btneditdetail.Name = "btneditdetail";
+                btneditdetail.Text = "Edit";
+                btneditdetail.HeaderText = "";
+                btneditdetail.UseColumnTextForButtonValue = true;
+                //int indexbtndetail = 4;
+                dataGridViewDetail.ReadOnly = true;
+                dataGridViewDetail.Columns.Add(btneditdetail);
+                //dataGridView1.CellClick += dataGridView1_CellClick;
+                dataGridViewDetail.AutoResizeColumns();
+                dataGridViewDetail.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dataGridViewDetail.Columns[0].Visible = false;
+                dataGridViewDetail.Columns[1].Visible = false;
+                dataGridViewDetail.Columns[4].Visible = false;
+                dataGridViewDetail.Columns[3].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dataGridViewDetail.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                //dataGridViewDetail.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                dataGridViewDetail.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dataGridViewDetail.Columns[2].MinimumWidth = 150;
+                dataGridViewDetail.Columns[2].Width = 150;
+                dataGridViewDetail.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dataGridViewDetail.Columns[6].MinimumWidth = 100;
+                dataGridViewDetail.Columns[6].Width = 100;
+                dataGridViewDetail.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dataGridViewDetail.Columns[5].MinimumWidth = 100;
+                dataGridViewDetail.Columns[5].Width = 100;
+
+
+                //cara tambahkan kolom image
+                //DataGridViewImageColumn img = new DataGridViewImageColumn();
+                //Image image = Image.FromFile("d:\\temp\\test.png");
+                //img.Image = image;
+                //dataGridView1.Columns.Add(img);
+
+            }
+        }
 
 
         private void btnMaintain_Click(object sender, EventArgs e)
@@ -96,43 +156,29 @@ namespace MaintainSebaranMushaf
             dataGridViewDetail.Height = panelDetail.Size.Height - 50;
         }
 
+        private void dataGridViewDetail_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex < 0 || e.RowIndex < 0)
+            {
+                return;
+            }
+            var dataGridView = (sender as DataGridView);
+            if (e.ColumnIndex == 5 || e.ColumnIndex == 6)
+                dataGridView.Cursor = Cursors.Hand;
+            else
+                dataGridView.Cursor = Cursors.Default;
+        }
 
-
-        private void dataGridViewMaster_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewDetail_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-                // MessageBox.Show(dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString());
-                DataTable detaile = db.GetDetail(dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString());
-                dataGridViewDetail.RowTemplate.Height = 100;
-                dataGridViewDetail.DataSource = null;
-                dataGridViewDetail.Rows.Clear();
-                dataGridViewDetail.Columns.Clear();
-                dataGridViewDetail.DataSource = detaile;
-                labelIDPilihan.Text = "- " + dataGridViewMaster.Rows[e.RowIndex].Cells[1].Value.ToString();
-
-                DataGridViewButtonColumn btneditdetail = new DataGridViewButtonColumn();
-                btneditdetail.Name = "btneditdetail";
-                btneditdetail.Text = "Edit";
-                btneditdetail.HeaderText = "";
-                btneditdetail.UseColumnTextForButtonValue = true;
-                //int indexbtndetail = 4;
-                dataGridViewDetail.ReadOnly = true;
-                dataGridViewDetail.Columns.Add(btneditdetail);
-                //dataGridView1.CellClick += dataGridView1_CellClick;
-                dataGridViewDetail.AutoResizeColumns();
-                dataGridViewDetail.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dataGridViewDetail.Columns[0].Visible = false;
-                dataGridViewDetail.Columns[1].Visible = false;
-                dataGridViewDetail.Columns[3].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-                dataGridViewDetail.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-                //dataGridViewDetail.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                MessageBox.Show(senderGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
             }
+
         }
-
-
     }
 }
