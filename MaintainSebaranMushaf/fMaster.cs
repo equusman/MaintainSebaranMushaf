@@ -176,7 +176,16 @@ namespace MaintainSebaranMushaf
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-                MessageBox.Show(senderGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+                //klik detail
+                MessageBox.Show(senderGrid.Rows[e.RowIndex].Cells[2].Value.ToString());            
+            }
+            else if (senderGrid.Columns[e.ColumnIndex] is DataGridViewImageColumn &&
+                e.RowIndex >= 0)
+            {
+                fPicture preview = new fPicture();
+                preview.pictureBox.Image = Image.FromFile(Application.StartupPath.ToString() + senderGrid.Rows[e.RowIndex].Cells[4].Value.ToString().Replace('/', '\\') + ".png");
+                preview.Cursor = Cursors.Hand;
+                preview.ShowDialog();
             }
 
         }

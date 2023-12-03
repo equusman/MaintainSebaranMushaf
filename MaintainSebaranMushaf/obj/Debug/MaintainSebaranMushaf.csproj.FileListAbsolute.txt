@@ -35,3 +35,4 @@ F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\EntityFramework.x
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\EntityFramework.SqlServer.xml
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\System.Data.SQLite.xml
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\sebaranmushaf.dat
+F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\obj\Debug\MaintainSebaranMushaf.fPicture.resources
