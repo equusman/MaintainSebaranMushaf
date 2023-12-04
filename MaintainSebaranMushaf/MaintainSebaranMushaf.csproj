@@ -103,6 +103,12 @@
     <Compile Include="fMaster.Designer.cs">
       <DependentUpon>fMaster.cs</DependentUpon>
     </Compile>
+    <Compile Include="fDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fDetail.Designer.cs">
+      <DependentUpon>fDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="fPicture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="fMaster.resx">
       <DependentUpon>fMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fDetail.resx">
+      <DependentUpon>fDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fPicture.resx">
       <DependentUpon>fPicture.cs</DependentUpon>

@@ -18,15 +18,13 @@ namespace MaintainSebaranMushaf
             InitializeComponent();
         }
 
-
-
         private void fMaster_Load(object sender, EventArgs e)
         {
-            button1.Text = db.LastIdPin().ToString();
-
+            btnAddNew.Enabled = false;
+            btnAddNew.ForeColor = System.Drawing.Color.FromArgb(66,66,66);
+            //btnAddNew.Text = db.LastIdPin().ToString();
             DataTable datane = db.ExecuteNoParam("select idpin as ID,judulpin as Judul ,jumlahkoleksi as JumlahKoleksi from master_dotpinpoint");
             dataGridViewMaster.DataSource = datane;
-
             DataGridViewButtonColumn btndetail = new DataGridViewButtonColumn();
             btndetail.Name = "btndetail";
             btndetail.Text = "Detail";
@@ -45,9 +43,6 @@ namespace MaintainSebaranMushaf
             dataGridViewMaster.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridViewMaster.Columns[3].MinimumWidth = 80;
             dataGridViewMaster.Columns[3].Width = 80;
-
-
-
         }
 
         private void dataGridViewMaster_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -106,14 +101,8 @@ namespace MaintainSebaranMushaf
                 dataGridViewDetail.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                 dataGridViewDetail.Columns[5].MinimumWidth = 100;
                 dataGridViewDetail.Columns[5].Width = 100;
-
-
-                //cara tambahkan kolom image
-                //DataGridViewImageColumn img = new DataGridViewImageColumn();
-                //Image image = Image.FromFile("d:\\temp\\test.png");
-                //img.Image = image;
-                //dataGridView1.Columns.Add(img);
-
+                btnAddNew.Enabled = true;
+                btnAddNew.ForeColor = System.Drawing.Color.FromArgb(60, 120, 140);
             }
         }
 
@@ -124,8 +113,6 @@ namespace MaintainSebaranMushaf
             panelAktif.Top = btnMaintain.Top;
             panelMaintain.Show();
         }
-
-
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
@@ -154,6 +141,8 @@ namespace MaintainSebaranMushaf
             dataGridViewMaster.Width = panelMaster.Size.Width -20;
             dataGridViewDetail.Width = panelDetail.Size.Width -20;
             dataGridViewDetail.Height = panelDetail.Size.Height - 50;
+            btnAddNew.Left = panelDetail.Width - btnAddNew.Width - 14;
+
         }
 
         private void dataGridViewDetail_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -188,6 +177,12 @@ namespace MaintainSebaranMushaf
                 preview.ShowDialog();
             }
 
+        }
+
+        private void btnAddNew_Click(object sender, EventArgs e)
+        {
+            fDetail detail = new fDetail();
+            detail.ShowDialog();
         }
     }
 }

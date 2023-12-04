@@ -36,3 +36,4 @@ F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\EntityFramework.S
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\System.Data.SQLite.xml
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\sebaranmushaf.dat
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\obj\Debug\MaintainSebaranMushaf.fPicture.resources
+F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\obj\Debug\MaintainSebaranMushaf.fDetail.resources
