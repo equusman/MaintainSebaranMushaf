@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -21,6 +17,7 @@ namespace MaintainSebaranMushaf
 
         public int idpin;
         public int itemcode;
+        public int FormMode = 0;  // 0 initial, 1 add new, 2 edit mode
 
         public fDetail()
         {
@@ -101,54 +98,103 @@ namespace MaintainSebaranMushaf
             //txtKeterangan.Text = sb.ToString();
             txtGambar.Image = Image.FromFile(Application.StartupPath.ToString() + dtl.Filegambar.ToString().Replace('/', '\\') + ".png");
             txtGambar.Tag = Application.StartupPath.ToString() + dtl.Filegambar.ToString().Replace('/', '\\') + ".png";
+            openBrowseGambar.FileName = Application.StartupPath.ToString() + dtl.Filegambar.ToString().Replace('/', '\\') + ".png";
+            openBrowseGambar.Tag = openBrowseGambar.FileName;
             loaded = true;
         }
 
         private bool DoSave()
         {
-            if (txtKeterangan.Text.Equals("") || txtNamaMushaf.Text.Equals("") || openBrowseGambar.FileName.Equals(""))
-            {
-                if (ThereAreUnsavedChanges)
+            if (FormMode == 1) 
+            { 
+                if (txtKeterangan.Text.Equals("") || txtNamaMushaf.Text.Equals("") || openBrowseGambar.FileName.Equals(""))
                 {
-                    MessageBox.Show("Nama Mushaf, Keterangan dan gambar tidak boleh kosong", "Error", MessageBoxButtons.OK);
-                    return false;
-                }
-            }
-            else
-            {
-                try
-                {
-                    File.Copy(openBrowseGambar.FileName, Application.StartupPath.ToString().Replace('/', '\\') +"//mushaf//"+ Path.GetFileNameWithoutExtension(openBrowseGambar.FileName) + ".png");
-                    Detail savedetail = new Detail()
+                    if (ThereAreUnsavedChanges)
                     {
-                        Idpin = this.idpin,
-                        Filegambar = ("/mushaf/" + Path.GetFileNameWithoutExtension(openBrowseGambar.FileName)),
-                        Deskripsiitem = txtKeterangan.Text,
-                        Judulitem = txtNamaMushaf.Text
-                    };
-                    byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(txtKeterangan.Text);
-                    Dictionary<string, object> parameters = new Dictionary<string, object>
-                    {
-                        { "@keterangan", textBytes },
-                        { "@idpin", savedetail.Idpin },
-                        { "@filegambar", savedetail.Filegambar},
-                        { "@judul", savedetail.Judulitem},
-                        { "@itemcode", db.LastItemcode()}
-                    };
-                    string insertstatement = "insert into detail_dotpinpoint (idpin, itemcode, judulitem, deskripsiitem,filegambar) values (@idpin,@itemcode,@judul,@keterangan, @filegambar )";
-                    if (db.ExecuteWrite(insertstatement, parameters) != 0)
-                    {
-                        MessageBox.Show("Data has been saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Nama Mushaf, Keterangan dan gambar tidak boleh kosong", "Error", MessageBoxButtons.OK);
+                        return false;
                     }
                 }
-                catch (Exception e)
+                else
                 {
-                    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
-                    throw;
+                    try
+                    {
+                        File.Copy(openBrowseGambar.FileName, Application.StartupPath.ToString().Replace('/', '\\') +"//mushaf//"+ Path.GetFileNameWithoutExtension(openBrowseGambar.FileName) + ".png");
+                        Detail savedetail = new Detail()
+                        {
+                            Idpin = this.idpin,
+                            Filegambar = ("/mushaf/" + Path.GetFileNameWithoutExtension(openBrowseGambar.FileName)),
+                            Deskripsiitem = txtKeterangan.Text,
+                            Judulitem = txtNamaMushaf.Text
+                        };
+                        byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(txtKeterangan.Text);
+                        Dictionary<string, object> parameters = new Dictionary<string, object>
+                        {
+                            { "@keterangan", textBytes },
+                            { "@idpin", savedetail.Idpin },
+                            { "@filegambar", savedetail.Filegambar},
+                            { "@judul", savedetail.Judulitem},
+                            { "@itemcode", db.LastItemcode()}
+                        };
+                        string insertstatement = "insert into detail_dotpinpoint (idpin, itemcode, judulitem, deskripsiitem,filegambar) values (@idpin,@itemcode,@judul,@keterangan, @filegambar )";
+                        if (db.ExecuteWrite(insertstatement, parameters) != 0)
+                        {
+                            MessageBox.Show("Data has been saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                        throw;
+                    }
+
+                }
+                return true;
+            } else if (FormMode == 2)
+            {
+                if (!(txtKeterangan.Text.Equals(txtKeterangan.Tag) && txtNamaMushaf.Text.Equals(txtNamaMushaf.Tag) && openBrowseGambar.FileName.Equals(openBrowseGambar.Tag)))
+                {
+                    //belum di review
+                    try
+                    {
+                        if (!openBrowseGambar.FileName.Equals(openBrowseGambar.Tag))
+                        {
+                            File.Copy(openBrowseGambar.FileName, Application.StartupPath.ToString().Replace('/', '\\') + "//mushaf//" + Path.GetFileNameWithoutExtension(openBrowseGambar.FileName) + ".png");
+                        }
+                        Detail savedetail = new Detail()
+                        {
+                            Idpin = this.idpin,
+                            Filegambar = ("/mushaf/" + Path.GetFileNameWithoutExtension(openBrowseGambar.FileName)),
+                            Deskripsiitem = txtKeterangan.Text,
+                            Judulitem = txtNamaMushaf.Text
+                        };
+                        byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(txtKeterangan.Text);
+                        Dictionary<string, object> parameters = new Dictionary<string, object>
+                        {
+                            { "@keterangan", textBytes },
+                            { "@idpin", idpin },
+                            { "@filegambar", savedetail.Filegambar},
+                            { "@judul", savedetail.Judulitem},
+                            { "@itemcode", itemcode}
+                        };
+                        string updatestatement = "update detail_dotpinpoint set judulitem = @judul, filegambar = @filegambar, deskripsiitem = @keterangan where idpin = @idpin and itemcode = @itemcode";
+                        if (db.ExecuteWrite(updatestatement, parameters) != 0)
+                        {
+                            MessageBox.Show("Data has been saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                        throw;
+                    }
+                    //batas belum di review
+
+
                 }
 
             }
-            return true;
+            return false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

@@ -80,6 +80,8 @@ namespace MaintainSebaranMushaf
                     //execute the query and get the number of row affected
                     numberOfRowsAffected = cmd.ExecuteNonQuery();
                 }
+                //con.AutoCommit = true;
+                con.Close();
 
                 return numberOfRowsAffected;
             }
@@ -108,6 +110,7 @@ namespace MaintainSebaranMushaf
                     da.Dispose();
                     return dt;
                 }
+                con.Close();
             }
         }
 
@@ -120,7 +123,7 @@ namespace MaintainSebaranMushaf
             using (var con = new SQLiteConnection(connectionString))
             {
                 con.Open();
-                using (var cmd = new SQLiteCommand(query, con))
+                using (var cmd = new SQLiteCommand("begin transaction ;"+query+"; commit transaction;", con))
                 {
                     var da = new SQLiteDataAdapter(cmd);
 
@@ -130,6 +133,7 @@ namespace MaintainSebaranMushaf
                     da.Dispose();
                     return dt;
                 }
+                con.Close();
             }
         }
 
@@ -198,7 +202,7 @@ namespace MaintainSebaranMushaf
 
         private int AddMaster(Master master)
         {
-            const string query = "INSERT INTO master_dotpinpoint(idpin, judulpin, jumlahkoleksi) VALUES(@idpin, @judulpin, @jumlahkoleksi)";
+            const string query = "begin transaction ;INSERT INTO master_dotpinpoint(idpin, judulpin, jumlahkoleksi) VALUES(@idpin, @judulpin, @jumlahkoleksi);commit transaction;";
 
             //here we are setting the parameter values that will be actually 
             //replaced in the query in Execute method

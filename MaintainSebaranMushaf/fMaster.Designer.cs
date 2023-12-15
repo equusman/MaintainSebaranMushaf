@@ -41,6 +41,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelMaintain = new System.Windows.Forms.Panel();
             this.panelDetail = new System.Windows.Forms.Panel();
+            this.txtIDPilihan = new System.Windows.Forms.Label();
             this.labelIDPilihan = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridViewDetail = new System.Windows.Forms.DataGridView();
@@ -48,9 +49,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtIDPilihan = new System.Windows.Forms.Label();
+            this.ExportFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMaster)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panelMaintain.SuspendLayout();
             this.panelDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetail)).BeginInit();
@@ -178,6 +182,8 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.progressBar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(200, 730);
             this.panel2.Name = "panel2";
@@ -207,6 +213,15 @@
             this.panelDetail.Name = "panelDetail";
             this.panelDetail.Size = new System.Drawing.Size(984, 392);
             this.panelDetail.TabIndex = 5;
+            // 
+            // txtIDPilihan
+            // 
+            this.txtIDPilihan.AutoSize = true;
+            this.txtIDPilihan.Location = new System.Drawing.Point(757, 17);
+            this.txtIDPilihan.Name = "txtIDPilihan";
+            this.txtIDPilihan.Size = new System.Drawing.Size(19, 21);
+            this.txtIDPilihan.TabIndex = 4;
+            this.txtIDPilihan.Text = "0";
             // 
             // labelIDPilihan
             // 
@@ -283,14 +298,22 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Maintain Sebaran";
             // 
-            // txtIDPilihan
+            // progressBar
             // 
-            this.txtIDPilihan.AutoSize = true;
-            this.txtIDPilihan.Location = new System.Drawing.Point(757, 17);
-            this.txtIDPilihan.Name = "txtIDPilihan";
-            this.txtIDPilihan.Size = new System.Drawing.Size(19, 21);
-            this.txtIDPilihan.TabIndex = 4;
-            this.txtIDPilihan.Text = "0";
+            this.progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.progressBar.Location = new System.Drawing.Point(0, 0);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(980, 27);
+            this.progressBar.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 5);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 21);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "label4";
             // 
             // fMaster
             // 
@@ -309,6 +332,8 @@
             this.Resize += new System.EventHandler(this.fMaster_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMaster)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panelMaintain.ResumeLayout(false);
             this.panelDetail.ResumeLayout(false);
             this.panelDetail.PerformLayout();
@@ -343,5 +368,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelIDPilihan;
         private System.Windows.Forms.Label txtIDPilihan;
+        private System.Windows.Forms.FolderBrowserDialog ExportFolderBrowserDialog;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }

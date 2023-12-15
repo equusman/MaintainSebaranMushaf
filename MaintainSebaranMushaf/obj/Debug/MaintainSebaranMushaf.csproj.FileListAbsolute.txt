@@ -34,6 +34,8 @@ F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\System.Data.SQLit
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\EntityFramework.xml
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\EntityFramework.SqlServer.xml
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\System.Data.SQLite.xml
-F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\sebaranmushaf.dat
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\obj\Debug\MaintainSebaranMushaf.fPicture.resources
 F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\obj\Debug\MaintainSebaranMushaf.fDetail.resources
+F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\DotNetZip.dll
+F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\DotNetZip.pdb
+F:\evisi\MaintainSebaranMushaf\MaintainSebaranMushaf\bin\Debug\DotNetZip.xml

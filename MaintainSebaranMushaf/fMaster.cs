@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Ionic.Zip;
+using System.IO;
 
 namespace MaintainSebaranMushaf
 {
@@ -193,6 +190,28 @@ namespace MaintainSebaranMushaf
             panelAktif.Height = btnExport.Height;
             panelAktif.Top = btnExport.Top;
             panelMaintain.Hide();
+            if (ExportFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                string sourcedbpath = Application.StartupPath.ToString().Replace('/', '\\')+"\\sebaranmushaf.dat";
+                string sourcemushaffolder = Application.StartupPath.ToString().Replace('/', '\\') + "\\mushaf\\";
+                File.Copy(sourcedbpath, Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.sqlite", true);
+                using (var zip = new ZipFile())
+                {
+                    
+                    zip.AddFile(Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.sqlite","\\");
+
+                    DirectoryInfo mushafdir = new DirectoryInfo(sourcemushaffolder);
+                    FileInfo[] listpng = mushafdir.GetFiles("*.png");
+                    foreach (FileInfo filepng in listpng)
+                    {
+                        zip.AddFile(sourcemushaffolder + filepng.Name,"\\mushaf\\");
+                    }
+                    DateTime now = DateTime.Now;
+                    string dt = now.ToString("yyyyMMdd-HHmmss");
+                    zip.Save(ExportFolderBrowserDialog.SelectedPath+"\\sebaranmushaf-"+dt+".zip");
+                    MessageBox.Show("Export " + ExportFolderBrowserDialog.SelectedPath + "\\sebaranmushaf-" + dt + ".zip finished!", "Information", MessageBoxButtons.OK);
+                }
+            }
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -249,6 +268,7 @@ namespace MaintainSebaranMushaf
             {
                 //klik detail
                 //MessageBox.Show(senderGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+                fdetail.FormMode = 2;
                 fdetail.DoLoad(mst, dtl);
                 fdetail.ShowDialog();
             }
@@ -282,6 +302,7 @@ namespace MaintainSebaranMushaf
             dtl.Judulitem = "";
 
             fdetail.datadetail = dtl;
+            fdetail.FormMode = 1;
             fdetail.DoClear(mst);
 
             fdetail.ShowDialog();
