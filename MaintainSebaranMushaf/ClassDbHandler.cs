@@ -40,7 +40,7 @@ namespace MaintainSebaranMushaf
         public string Filegambar { get; set; }
 
         //[Column("idpin")]
-        public string Idpin { get; set; }
+        public int Idpin { get; set; }
     }
 
     class ClassDbHandler
@@ -59,7 +59,7 @@ namespace MaintainSebaranMushaf
 
         }
 
-        private int ExecuteWrite(string query, Dictionary<string, object> args)
+        public int ExecuteWrite(string query, Dictionary<string, object> args)
         {
             int numberOfRowsAffected;
 
@@ -135,7 +135,8 @@ namespace MaintainSebaranMushaf
 
         public DataTable GetDetail(string prmID)
         {
-            string query = "select idpin, itemcode, cast(judulitem as TEXT) as 'Judul Mushaf', replace( replace( deskripsiitem, CHAR(10), ' '), CHAR(13), ' ') as Deskripsi, filegambar from detail_dotpinpoint where idpin = @idpin"; // belum ada deskripsiitem, 
+            //string query = "select idpin, itemcode, cast(judulitem as TEXT) as 'Judul Mushaf', replace( replace( deskripsiitem, CHAR(10), ' '), CHAR(13), ' ') as Deskripsi, filegambar from detail_dotpinpoint where idpin = @idpin"; // belum ada deskripsiitem, 
+            string query = "select idpin, itemcode, cast(judulitem as TEXT) as 'Judul Mushaf', cast(deskripsiitem as TEXT) as Deskripsi, filegambar from detail_dotpinpoint where idpin = @idpin";
 
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
@@ -159,18 +160,41 @@ namespace MaintainSebaranMushaf
 
                     if (result != null)
                     {
-                        Console.WriteLine($"The selected value is: {result}");
+ //                       Console.WriteLine($"The selected value is: {result}");
                         return result;
                     }
                     else
                     {
-                        Console.WriteLine("No result found.");
+ //                       Console.WriteLine("No result found.");
                         return null;
                     }
                 }
             }
         }
 
+        public object LastItemcode()
+        {
+            using (var con = new SQLiteConnection(connectionString))
+            {
+                const string query = "select max(itemcode)+1 from detail_dotpinpoint";
+                con.Open();
+                using (SQLiteCommand command = new SQLiteCommand(query, con))
+                {
+                    object result = command.ExecuteScalar();
+
+                    if (result != null)
+                    {
+//                        Console.WriteLine($"The selected value is: {result}");
+                        return result;
+                    }
+                    else
+                    {
+//                        Console.WriteLine("No result found.");
+                        return null;
+                    }
+                }
+            }
+        }
 
         private int AddMaster(Master master)
         {

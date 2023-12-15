@@ -48,6 +48,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtIDPilihan = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMaster)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelMaintain.SuspendLayout();
@@ -196,6 +197,7 @@
             // 
             // panelDetail
             // 
+            this.panelDetail.Controls.Add(this.txtIDPilihan);
             this.panelDetail.Controls.Add(this.labelIDPilihan);
             this.panelDetail.Controls.Add(this.label3);
             this.panelDetail.Controls.Add(this.btnAddNew);
@@ -281,6 +283,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Maintain Sebaran";
             // 
+            // txtIDPilihan
+            // 
+            this.txtIDPilihan.AutoSize = true;
+            this.txtIDPilihan.Location = new System.Drawing.Point(757, 17);
+            this.txtIDPilihan.Name = "txtIDPilihan";
+            this.txtIDPilihan.Size = new System.Drawing.Size(19, 21);
+            this.txtIDPilihan.TabIndex = 4;
+            this.txtIDPilihan.Text = "0";
+            // 
             // fMaster
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -331,5 +342,6 @@
         private System.Windows.Forms.DataGridView dataGridViewDetail;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelIDPilihan;
+        private System.Windows.Forms.Label txtIDPilihan;
     }
 }

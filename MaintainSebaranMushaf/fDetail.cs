@@ -7,15 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MaintainSebaranMushaf
 {
     public partial class fDetail : Form
     {
-        private bool ThereAreUnsavedChanges;
+        private bool ThereAreUnsavedChanges = false;
+        private ClassDbHandler db = new ClassDbHandler();
+
+        public Detail datadetail = new Detail();
+        private bool loaded;
+
+        public int idpin;
+        public int itemcode;
+
         public fDetail()
         {
+            this.ThereAreUnsavedChanges  = false;
             InitializeComponent();
+        }
+
+        private void explodeData()
+        {
+            int sbLen = datadetail.Deskripsiitem.Length
+                + (datadetail.Deskripsiitem.Length << 1);
+            StringBuilder sb = new StringBuilder(sbLen);
+            foreach (String line in txtKeterangan.Lines)
+            {
+                sb.AppendLine(line);
+            }
+            txtKeterangan.Text = sb.ToString();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -43,25 +65,152 @@ namespace MaintainSebaranMushaf
             }
         }
 
+        public void DoClear(Master mst)
+        {
+            loaded = false;
+            idpin = mst.Idpin;
+            txtPinPoint.Text = mst.Judulpin;
+            txtPinPoint.Tag = mst.Judulpin;
+            itemcode = 0;
+            txtNamaMushaf.Text = "";
+            txtNamaMushaf.Tag = "";
+            txtKeterangan.Text = "";
+            txtKeterangan.Tag = "";
+            txtGambar.Image = null;
+            txtGambar.Tag = "";
+            loaded = true;
+        }
+
+        public void DoLoad(Master mst, Detail dtl)
+        {
+            loaded = false;
+            idpin = dtl.Idpin;
+            itemcode = dtl.Itemcode;
+            txtPinPoint.Text = mst.Judulpin;
+            txtPinPoint.Tag = mst.Judulpin;
+            txtNamaMushaf.Text = dtl.Judulitem;
+            txtNamaMushaf.Tag = dtl.Judulitem;
+            txtKeterangan.Text = dtl.Deskripsiitem;
+            txtKeterangan.Tag = dtl.Deskripsiitem;
+            //int sbLen = txtKeterangan.Text.Length + (txtKeterangan.Lines.Length << 1);
+            //StringBuilder sb = new StringBuilder(sbLen);
+            //foreach (String line in txtKeterangan.Lines)
+           // {
+            //    sb.AppendLine(line);
+           // }
+            //txtKeterangan.Text = sb.ToString();
+            txtGambar.Image = Image.FromFile(Application.StartupPath.ToString() + dtl.Filegambar.ToString().Replace('/', '\\') + ".png");
+            txtGambar.Tag = Application.StartupPath.ToString() + dtl.Filegambar.ToString().Replace('/', '\\') + ".png";
+            loaded = true;
+        }
+
         private bool DoSave()
         {
+            if (txtKeterangan.Text.Equals("") || txtNamaMushaf.Text.Equals("") || openBrowseGambar.FileName.Equals(""))
+            {
+                if (ThereAreUnsavedChanges)
+                {
+                    MessageBox.Show("Nama Mushaf, Keterangan dan gambar tidak boleh kosong", "Error", MessageBoxButtons.OK);
+                    return false;
+                }
+            }
+            else
+            {
+                try
+                {
+                    File.Copy(openBrowseGambar.FileName, Application.StartupPath.ToString().Replace('/', '\\') +"//mushaf//"+ Path.GetFileNameWithoutExtension(openBrowseGambar.FileName) + ".png");
+                    Detail savedetail = new Detail()
+                    {
+                        Idpin = this.idpin,
+                        Filegambar = ("/mushaf/" + Path.GetFileNameWithoutExtension(openBrowseGambar.FileName)),
+                        Deskripsiitem = txtKeterangan.Text,
+                        Judulitem = txtNamaMushaf.Text
+                    };
+                    byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(txtKeterangan.Text);
+                    Dictionary<string, object> parameters = new Dictionary<string, object>
+                    {
+                        { "@keterangan", textBytes },
+                        { "@idpin", savedetail.Idpin },
+                        { "@filegambar", savedetail.Filegambar},
+                        { "@judul", savedetail.Judulitem},
+                        { "@itemcode", db.LastItemcode()}
+                    };
+                    string insertstatement = "insert into detail_dotpinpoint (idpin, itemcode, judulitem, deskripsiitem,filegambar) values (@idpin,@itemcode,@judul,@keterangan, @filegambar )";
+                    if (db.ExecuteWrite(insertstatement, parameters) != 0)
+                    {
+                        MessageBox.Show("Data has been saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                    throw;
+                }
+
+            }
             return true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            DoSave();
-            this.Close();
+            if (DoSave()) this.Close();
         }
 
         private void txtNamaMushaf_TextChanged(object sender, EventArgs e)
         {
-            ThereAreUnsavedChanges = true;
+            if (loaded) 
+            { 
+                try
+                {
+                    if (!txtNamaMushaf.Text.Equals(txtNamaMushaf.Tag.ToString()) || txtNamaMushaf.Text.Equals(null))
+                    {
+                        this.ThereAreUnsavedChanges = true;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
         }
 
         private void txtKeterangan_TextChanged(object sender, EventArgs e)
         {
-            ThereAreUnsavedChanges = true;
+            if (loaded)
+            {
+                try
+                {
+                    if (!txtKeterangan.Text.Equals(txtKeterangan.Tag.ToString()) || txtKeterangan.Text.Equals(null))
+                    {
+                        this.ThereAreUnsavedChanges = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            if (openBrowseGambar.ShowDialog() == DialogResult.OK)
+            {
+                txtGambar.Image = Image.FromFile(openBrowseGambar.FileName);
+                this.ThereAreUnsavedChanges = true;
+            }
+        }
+
+        private void fDetail_Shown(object sender, EventArgs e)
+        {
+            //loaded = false;
+        }
+
+        private void fDetail_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!ThereAreUnsavedChanges && !DoSave()) e.Cancel = true;
         }
     }
 }

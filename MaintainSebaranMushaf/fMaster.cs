@@ -13,6 +13,12 @@ namespace MaintainSebaranMushaf
     public partial class fMaster : Form
     {
         private ClassDbHandler db = new ClassDbHandler();
+
+        private Master master = new Master();
+        private Detail detail = new Detail();
+        private fDetail fdetail = new fDetail();
+
+
         public fMaster()
         {
             InitializeComponent();
@@ -48,10 +54,14 @@ namespace MaintainSebaranMushaf
         private void dataGridViewMaster_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
-
+            
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
+                master.Idpin = int.Parse(dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString());
+                master.Judulpin = dataGridViewMaster.Rows[e.RowIndex].Cells[1].Value.ToString();
+                master.Jumlahkoleksi = dataGridViewMaster.Rows[e.RowIndex].Cells[2].Value.ToString();
+               
                 // MessageBox.Show(dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString());
                 DataTable detaile = db.GetDetail(dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString());
                 dataGridViewDetail.RowTemplate.Height = 100;
@@ -60,6 +70,7 @@ namespace MaintainSebaranMushaf
                 dataGridViewDetail.Columns.Clear();
                 dataGridViewDetail.DataSource = detaile;
                 labelIDPilihan.Text = "- " + dataGridViewMaster.Rows[e.RowIndex].Cells[1].Value.ToString();
+                txtIDPilihan.Text = dataGridViewMaster.Rows[e.RowIndex].Cells[0].Value.ToString();
 
                 DataGridViewImageColumn img = new DataGridViewImageColumn();
                 Image image = null;
@@ -104,6 +115,62 @@ namespace MaintainSebaranMushaf
                 btnAddNew.Enabled = true;
                 btnAddNew.ForeColor = System.Drawing.Color.FromArgb(60, 120, 140);
             }
+        }
+        
+        public void refreshDetail()
+        {
+            DataTable detaile = db.GetDetail(master.Idpin.ToString());
+            dataGridViewDetail.RowTemplate.Height = 100;
+            dataGridViewDetail.DataSource = null;
+            dataGridViewDetail.Rows.Clear();
+            dataGridViewDetail.Columns.Clear();
+            dataGridViewDetail.DataSource = detaile;
+            labelIDPilihan.Text = "- " + master.Judulpin;
+            txtIDPilihan.Text = master.Idpin.ToString();
+
+            DataGridViewImageColumn img = new DataGridViewImageColumn();
+            Image image = null;
+            //img.Image = image;
+            img.ImageLayout = DataGridViewImageCellLayout.Zoom;
+            dataGridViewDetail.Columns.Add(img);
+
+            DataGridViewImageCell imgcell = new DataGridViewImageCell();
+            foreach (DataGridViewRow baris in dataGridViewDetail.Rows)
+            {
+                image = Image.FromFile(Application.StartupPath.ToString() + baris.Cells[4].Value.ToString().Replace('/', '\\') + ".png");
+                baris.Cells[5].Value = (System.Drawing.Image)image;
+            }
+
+
+            DataGridViewButtonColumn btneditdetail = new DataGridViewButtonColumn();
+            btneditdetail.Name = "btneditdetail";
+            btneditdetail.Text = "Edit";
+            btneditdetail.HeaderText = "";
+            btneditdetail.UseColumnTextForButtonValue = true;
+            //int indexbtndetail = 4;
+            dataGridViewDetail.ReadOnly = true;
+            dataGridViewDetail.Columns.Add(btneditdetail);
+            //dataGridView1.CellClick += dataGridView1_CellClick;
+            dataGridViewDetail.AutoResizeColumns();
+            dataGridViewDetail.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewDetail.Columns[0].Visible = false;
+            dataGridViewDetail.Columns[1].Visible = false;
+            dataGridViewDetail.Columns[4].Visible = false;
+            dataGridViewDetail.Columns[3].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dataGridViewDetail.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //dataGridViewDetail.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewDetail.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewDetail.Columns[2].MinimumWidth = 150;
+            dataGridViewDetail.Columns[2].Width = 150;
+            dataGridViewDetail.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewDetail.Columns[6].MinimumWidth = 100;
+            dataGridViewDetail.Columns[6].Width = 100;
+            dataGridViewDetail.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewDetail.Columns[5].MinimumWidth = 100;
+            dataGridViewDetail.Columns[5].Width = 100;
+            btnAddNew.Enabled = true;
+            btnAddNew.ForeColor = System.Drawing.Color.FromArgb(60, 120, 140);
+
         }
 
 
@@ -161,12 +228,29 @@ namespace MaintainSebaranMushaf
         private void dataGridViewDetail_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
+            Master mst = new Master();
+            Detail dtl = new Detail();
+
+            //var senderGrid = (DataGridView)sender;
+
+            //mst.Idpin = senderGrid.Rows[e.RowIndex].Cells[2].Value
+            mst.Idpin = master.Idpin;
+            mst.Judulpin = master.Judulpin;
+            mst.Jumlahkoleksi = master.Jumlahkoleksi;
+            dtl.Deskripsiitem = senderGrid.Rows[e.RowIndex].Cells[3].Value.ToString();
+            dtl.Filegambar = senderGrid.Rows[e.RowIndex].Cells[4].Value.ToString();
+            dtl.Idpin = Int16.Parse(txtIDPilihan.Text.ToString());
+            dtl.Itemcode = Int16.Parse(senderGrid.Rows[e.RowIndex].Cells[1].Value.ToString());
+            dtl.Judulitem = senderGrid.Rows[e.RowIndex].Cells[2].Value.ToString();
+
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
                 //klik detail
-                MessageBox.Show(senderGrid.Rows[e.RowIndex].Cells[2].Value.ToString());            
+                //MessageBox.Show(senderGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+                fdetail.DoLoad(mst, dtl);
+                fdetail.ShowDialog();
             }
             else if (senderGrid.Columns[e.ColumnIndex] is DataGridViewImageColumn &&
                 e.RowIndex >= 0)
@@ -181,8 +265,27 @@ namespace MaintainSebaranMushaf
 
         private void btnAddNew_Click(object sender, EventArgs e)
         {
-            fDetail detail = new fDetail();
-            detail.ShowDialog();
+
+            Master mst = new Master();
+            Detail dtl = new Detail();
+
+            //var senderGrid = (DataGridView)sender;
+
+            //mst.Idpin = senderGrid.Rows[e.RowIndex].Cells[2].Value
+            mst.Idpin = master.Idpin;
+            mst.Judulpin = master.Judulpin;
+            mst.Jumlahkoleksi = master.Jumlahkoleksi;
+            dtl.Deskripsiitem = "";
+            dtl.Filegambar = "";
+            dtl.Idpin = Int16.Parse(txtIDPilihan.Text.ToString());
+            dtl.Itemcode = 0;
+            dtl.Judulitem = "";
+
+            fdetail.datadetail = dtl;
+            fdetail.DoClear(mst);
+
+            fdetail.ShowDialog();
+            refreshDetail();
         }
     }
 }
