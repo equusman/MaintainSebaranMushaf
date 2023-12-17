@@ -23,6 +23,12 @@ namespace MaintainSebaranMushaf
 
         private void fMaster_Load(object sender, EventArgs e)
         {
+            panelMaintain.Show();
+            labelJudulPanel.Text = "Maintain Sebaran";
+            labelJudulPanel.Show();
+            panelExport.Hide();
+            panelMaster.Show();
+            panelDetail.Show();
             btnAddNew.Enabled = false;
             btnAddNew.ForeColor = System.Drawing.Color.FromArgb(66,66,66);
             //btnAddNew.Text = db.LastIdPin().ToString();
@@ -187,31 +193,16 @@ namespace MaintainSebaranMushaf
 
         private void btnExport_Click(object sender, EventArgs e)
         {
+            panelMaintain.Hide();
+            labelJudulPanel.Text = "Export Data";
+            labelJudulPanel.Show();
+            panelExport.Show();
+            panelMaster.Hide();
+            panelDetail.Hide();
+
+
             panelAktif.Height = btnExport.Height;
             panelAktif.Top = btnExport.Top;
-            panelMaintain.Hide();
-            if (ExportFolderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                string sourcedbpath = Application.StartupPath.ToString().Replace('/', '\\')+"\\sebaranmushaf.dat";
-                string sourcemushaffolder = Application.StartupPath.ToString().Replace('/', '\\') + "\\mushaf\\";
-                File.Copy(sourcedbpath, Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.sqlite", true);
-                using (var zip = new ZipFile())
-                {
-                    
-                    zip.AddFile(Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.sqlite","\\");
-
-                    DirectoryInfo mushafdir = new DirectoryInfo(sourcemushaffolder);
-                    FileInfo[] listpng = mushafdir.GetFiles("*.png");
-                    foreach (FileInfo filepng in listpng)
-                    {
-                        zip.AddFile(sourcemushaffolder + filepng.Name,"\\mushaf\\");
-                    }
-                    DateTime now = DateTime.Now;
-                    string dt = now.ToString("yyyyMMdd-HHmmss");
-                    zip.Save(ExportFolderBrowserDialog.SelectedPath+"\\sebaranmushaf-"+dt+".zip");
-                    MessageBox.Show("Export " + ExportFolderBrowserDialog.SelectedPath + "\\sebaranmushaf-" + dt + ".zip finished!", "Information", MessageBoxButtons.OK);
-                }
-            }
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -307,6 +298,50 @@ namespace MaintainSebaranMushaf
 
             fdetail.ShowDialog();
             refreshDetail();
+        }
+
+        private void btnSelectExportFolder_Click(object sender, EventArgs e)
+        {
+            if (ExportFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                btnStartExport.Enabled = true;    
+            }
+        }
+
+        private void btnStartExport_Click(object sender, EventArgs e)
+        {
+            string sourcedbpath = Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.dat";
+            string sourcemushaffolder = Application.StartupPath.ToString().Replace('/', '\\') + "\\mushaf\\";
+            DirectoryInfo mushafdir = new DirectoryInfo(sourcemushaffolder);
+            FileInfo[] listpng = mushafdir.GetFiles("*.png");
+            int totalfile = listpng.Length + 1;
+            richTexExportLog.AppendText("Exporting database.");
+            File.Copy(sourcedbpath, Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.sqlite", true);
+            richTexExportLog.AppendText("Exporting database finished.");
+
+            using (var zip = new ZipFile())
+            {
+                richTexExportLog.AppendText("Compressing database.");
+
+                zip.AddFile(Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.sqlite", "\\");
+                richTexExportLog.AppendText("Database compresed.");
+                richTexExportLog.AppendText("Start compressing image files.");
+
+                foreach (FileInfo filepng in listpng)
+                {
+                    richTexExportLog.AppendText("Compressing "+ filepng.Name+".");
+                    zip.AddFile(sourcemushaffolder + filepng.Name, "\\mushaf\\");
+                }
+                richTexExportLog.AppendText("Finish compressing image files.");
+                DateTime now = DateTime.Now;
+                string dt = now.ToString("yyyyMMdd-HHmmss");
+                richTexExportLog.AppendText("Completing export file.");
+                zip.Save(ExportFolderBrowserDialog.SelectedPath + "\\sebaranmushaf-" + dt + ".zip");
+                richTexExportLog.AppendText("Export " + ExportFolderBrowserDialog.SelectedPath + "\\sebaranmushaf-" + dt + ".zip finished!");
+                MessageBox.Show("Export " + ExportFolderBrowserDialog.SelectedPath + "\\sebaranmushaf-" + dt + ".zip finished!", "Information", MessageBoxButtons.OK);
+            }
+            File.Delete(Application.StartupPath.ToString().Replace('/', '\\') + "\\sebaranmushaf.sqlite");
+
         }
     }
 }

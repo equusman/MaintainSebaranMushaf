@@ -47,19 +47,24 @@
             this.dataGridViewDetail = new System.Windows.Forms.DataGridView();
             this.panelMaster = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.paneltop = new System.Windows.Forms.Panel();
+            this.labelJudulPanel = new System.Windows.Forms.Label();
+            this.panelExport = new System.Windows.Forms.Panel();
             this.ExportFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.label4 = new System.Windows.Forms.Label();
+            this.textExport = new System.Windows.Forms.TextBox();
+            this.btnSelectExportFolder = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnStartExport = new System.Windows.Forms.Button();
+            this.labelJudulExport = new System.Windows.Forms.Label();
+            this.richTexExportLog = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMaster)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panelMaintain.SuspendLayout();
             this.panelDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetail)).BeginInit();
             this.panelMaster.SuspendLayout();
-            this.panel4.SuspendLayout();
+            this.paneltop.SuspendLayout();
+            this.panelExport.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAddNew
@@ -182,8 +187,6 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.progressBar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(200, 730);
             this.panel2.Name = "panel2";
@@ -194,7 +197,7 @@
             // 
             this.panelMaintain.Controls.Add(this.panelDetail);
             this.panelMaintain.Controls.Add(this.panelMaster);
-            this.panelMaintain.Controls.Add(this.panel4);
+            this.panelMaintain.Controls.Add(this.paneltop);
             this.panelMaintain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMaintain.Location = new System.Drawing.Point(200, 0);
             this.panelMaintain.Name = "panelMaintain";
@@ -278,48 +281,108 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Titik Poin Sebaran";
             // 
-            // panel4
+            // paneltop
             // 
-            this.panel4.Controls.Add(this.label1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(984, 65);
-            this.panel4.TabIndex = 2;
+            this.paneltop.Controls.Add(this.labelJudulPanel);
+            this.paneltop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.paneltop.Location = new System.Drawing.Point(0, 0);
+            this.paneltop.Name = "paneltop";
+            this.paneltop.Size = new System.Drawing.Size(984, 65);
+            this.paneltop.TabIndex = 2;
+            // 
+            // labelJudulPanel
+            // 
+            this.labelJudulPanel.AutoSize = true;
+            this.labelJudulPanel.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelJudulPanel.ForeColor = System.Drawing.Color.White;
+            this.labelJudulPanel.Location = new System.Drawing.Point(25, 18);
+            this.labelJudulPanel.Name = "labelJudulPanel";
+            this.labelJudulPanel.Size = new System.Drawing.Size(217, 28);
+            this.labelJudulPanel.TabIndex = 0;
+            this.labelJudulPanel.Text = "Maintain Sebaran";
+            this.labelJudulPanel.Visible = false;
+            // 
+            // panelExport
+            // 
+            this.panelExport.Controls.Add(this.richTexExportLog);
+            this.panelExport.Controls.Add(this.labelJudulExport);
+            this.panelExport.Controls.Add(this.btnStartExport);
+            this.panelExport.Controls.Add(this.label1);
+            this.panelExport.Controls.Add(this.btnSelectExportFolder);
+            this.panelExport.Controls.Add(this.textExport);
+            this.panelExport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelExport.Location = new System.Drawing.Point(200, 0);
+            this.panelExport.Name = "panelExport";
+            this.panelExport.Size = new System.Drawing.Size(984, 730);
+            this.panelExport.TabIndex = 5;
+            // 
+            // textExport
+            // 
+            this.textExport.Location = new System.Drawing.Point(46, 118);
+            this.textExport.Name = "textExport";
+            this.textExport.Size = new System.Drawing.Size(672, 27);
+            this.textExport.TabIndex = 8;
+            // 
+            // btnSelectExportFolder
+            // 
+            this.btnSelectExportFolder.Location = new System.Drawing.Point(569, 151);
+            this.btnSelectExportFolder.Name = "btnSelectExportFolder";
+            this.btnSelectExportFolder.Size = new System.Drawing.Size(149, 27);
+            this.btnSelectExportFolder.TabIndex = 9;
+            this.btnSelectExportFolder.Text = "Browse";
+            this.btnSelectExportFolder.UseVisualStyleBackColor = true;
+            this.btnSelectExportFolder.Click += new System.EventHandler(this.btnSelectExportFolder_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(25, 18);
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(46, 90);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(217, 28);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Maintain Sebaran";
+            this.label1.Size = new System.Drawing.Size(111, 21);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Export Folder";
             // 
-            // progressBar
+            // btnStartExport
             // 
-            this.progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBar.Location = new System.Drawing.Point(0, 0);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(980, 27);
-            this.progressBar.TabIndex = 6;
+            this.btnStartExport.Enabled = false;
+            this.btnStartExport.Location = new System.Drawing.Point(46, 216);
+            this.btnStartExport.Name = "btnStartExport";
+            this.btnStartExport.Size = new System.Drawing.Size(186, 58);
+            this.btnStartExport.TabIndex = 11;
+            this.btnStartExport.Text = "Start Export";
+            this.btnStartExport.UseVisualStyleBackColor = true;
+            this.btnStartExport.Click += new System.EventHandler(this.btnStartExport_Click);
             // 
-            // label4
+            // labelJudulExport
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 5);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 21);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "label4";
+            this.labelJudulExport.AutoSize = true;
+            this.labelJudulExport.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelJudulExport.ForeColor = System.Drawing.Color.White;
+            this.labelJudulExport.Location = new System.Drawing.Point(25, 18);
+            this.labelJudulExport.Name = "labelJudulExport";
+            this.labelJudulExport.Size = new System.Drawing.Size(217, 28);
+            this.labelJudulExport.TabIndex = 12;
+            this.labelJudulExport.Text = "Maintain Sebaran";
+            this.labelJudulExport.Visible = false;
+            // 
+            // richTexExportLog
+            // 
+            this.richTexExportLog.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.richTexExportLog.ForeColor = System.Drawing.SystemColors.Window;
+            this.richTexExportLog.Location = new System.Drawing.Point(46, 280);
+            this.richTexExportLog.Name = "richTexExportLog";
+            this.richTexExportLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.richTexExportLog.Size = new System.Drawing.Size(672, 314);
+            this.richTexExportLog.TabIndex = 13;
+            this.richTexExportLog.Text = "";
             // 
             // fMaster
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.Controls.Add(this.panelExport);
             this.Controls.Add(this.panelMaintain);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -332,16 +395,16 @@
             this.Resize += new System.EventHandler(this.fMaster_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMaster)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panelMaintain.ResumeLayout(false);
             this.panelDetail.ResumeLayout(false);
             this.panelDetail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetail)).EndInit();
             this.panelMaster.ResumeLayout(false);
             this.panelMaster.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            this.paneltop.ResumeLayout(false);
+            this.paneltop.PerformLayout();
+            this.panelExport.ResumeLayout(false);
+            this.panelExport.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -359,8 +422,8 @@
         private System.Windows.Forms.Panel panelAktif;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Panel panelMaintain;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel paneltop;
+        private System.Windows.Forms.Label labelJudulPanel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panelMaster;
         private System.Windows.Forms.Panel panelDetail;
@@ -369,7 +432,12 @@
         private System.Windows.Forms.Label labelIDPilihan;
         private System.Windows.Forms.Label txtIDPilihan;
         private System.Windows.Forms.FolderBrowserDialog ExportFolderBrowserDialog;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Panel panelExport;
+        private System.Windows.Forms.TextBox textExport;
+        private System.Windows.Forms.RichTextBox richTexExportLog;
+        private System.Windows.Forms.Label labelJudulExport;
+        private System.Windows.Forms.Button btnStartExport;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnSelectExportFolder;
     }
 }
